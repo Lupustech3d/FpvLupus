@@ -24,6 +24,48 @@ O celular lê o giroscópio, calcula os ângulos e envia comandos ao ESP8266 em 
 
 ---
 
+## Como instalar e compilar
+
+### Requisitos
+
+- [Android Studio](https://developer.android.com/studio) (versão Hedgehog ou mais recente)
+- Android SDK API 24 ou superior
+- Java 17 (já incluso no Android Studio)
+- Dispositivo Android com giroscópio (para head tracking)
+
+### Passos
+
+1. Clone o repositório:
+```
+git clone https://github.com/Lupustech3d/FpvLupus.git
+```
+
+2. Abra o Android Studio e selecione **Open** → pasta `android-app/`
+
+3. Aguarde o Gradle sincronizar as dependências (automático)
+
+4. Conecte seu celular via USB com **depuração USB ativada**
+
+5. Clique em **Run** (▶) — o app será instalado e aberto
+
+> Também é possível compilar pelo terminal dentro da pasta `android-app/`:
+> ```
+> ./gradlew assembleDebug
+> ```
+> O APK gerado fica em `android-app/app/build/outputs/apk/debug/`
+
+### Dependências (baixadas automaticamente pelo Gradle)
+
+| Biblioteca | Versão | Uso |
+|---|---|---|
+| androidx.core:core-ktx | 1.13.1 | Kotlin extensions |
+| androidx.appcompat | 1.7.0 | Compatibilidade UI |
+| material | 1.12.0 | Componentes visuais |
+| constraintlayout | 2.1.4 | Layout |
+| activity-ktx | 1.9.1 | Activity result API |
+
+---
+
 ## App Android
 
 Pasta: `android-app/`
