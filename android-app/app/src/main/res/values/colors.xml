@@ -1,0 +1,9 @@
+<resources>
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="overlay_bg">#66000000</color>
+    <color name="surface_dark">#121212</color>
+    <color name="status_ok">#38C172</color>
+    <color name="status_error">#E3342F</color>
+    <color name="status_idle">#F2C94C</color>
+</resources>

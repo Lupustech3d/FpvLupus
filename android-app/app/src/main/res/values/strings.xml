@@ -1,0 +1,63 @@
+<resources>
+    <string name="app_name">Fpv_Lupus</string>
+    <string name="settings">Config</string>
+    <string name="recenter">Recalibrar centro</string>
+    <string name="center_servos">Centralizar servos</string>
+    <string name="tracking_on">Tracking ON</string>
+    <string name="tracking_off">Tracking OFF</string>
+    <string name="camera_status">Camera</string>
+    <string name="servo_status">Servos</string>
+    <string name="tracking_status">Tracking</string>
+    <string name="connected">Conectado</string>
+    <string name="disconnected">Desconectado</string>
+    <string name="active">Ativo</string>
+    <string name="inactive">Inativo</string>
+    <string name="save">Salvar</string>
+    <string name="cancel">Cancelar</string>
+    <string name="test_camera">Testar camera</string>
+    <string name="test_servos">Testar servos</string>
+    <string name="restore_defaults">Restaurar padrao</string>
+    <string name="camera_url">URL do stream da camera</string>
+    <string name="servo_ip">IP do ESP32 dos servos</string>
+    <string name="servo_port">Porta do ESP32 dos servos</string>
+    <string name="endpoint">Endpoint de controle</string>
+    <string name="horizontal_sensitivity">Sensibilidade horizontal</string>
+    <string name="vertical_sensitivity">Sensibilidade vertical</string>
+    <string name="invert_horizontal">Inverter horizontal</string>
+    <string name="invert_vertical">Inverter vertical</string>
+    <string name="pan_min">PAN minimo</string>
+    <string name="pan_max">PAN maximo</string>
+    <string name="tilt_min">TILT minimo</string>
+    <string name="tilt_max">TILT maximo</string>
+    <string name="pan_center">PAN central</string>
+    <string name="tilt_center">TILT central</string>
+    <string name="send_interval">Frequencia de envio (ms)</string>
+    <string name="dead_zone">Zona morta</string>
+    <string name="smoothing">Suavizacao</string>
+    <string name="camera_test_ok">Camera respondeu ao teste.</string>
+    <string name="camera_test_fail">Nao foi possivel acessar a camera.</string>
+    <string name="servo_test_ok">Comando enviado para os servos.</string>
+    <string name="servo_test_fail">Falha ao testar os servos.</string>
+    <string name="settings_saved">Configuracoes salvas.</string>
+    <string name="double_tap_hint">Toque duplo para exibir os controles</string>
+    <string name="invalid_port">Informe uma porta valida.</string>
+    <string name="invalid_camera_url">Informe uma URL valida para a camera.</string>
+    <string name="sensor_unavailable">Sensor de rotacao indisponivel.</string>
+    <string name="camera_testing">Testando camera...</string>
+    <string name="servo_testing">Testando servos...</string>
+    <string name="camera_url_label">Camera URL</string>
+    <string name="servo_ip_label">Servo IP</string>
+    <string name="servo_port_label">Servo porta</string>
+    <string name="endpoint_label">Endpoint</string>
+    <string name="horizontal_sensitivity_label">Sensibilidade horizontal (mais alto = mais forte)</string>
+    <string name="vertical_sensitivity_label">Sensibilidade vertical (mais alto = mais forte)</string>
+    <string name="pan_min_label">PAN minimo</string>
+    <string name="pan_max_label">PAN maximo</string>
+    <string name="tilt_min_label">TILT minimo</string>
+    <string name="tilt_max_label">TILT maximo</string>
+    <string name="pan_center_label">PAN central</string>
+    <string name="tilt_center_label">TILT central</string>
+    <string name="send_interval_label">Envio em ms (menor = mais rapido)</string>
+    <string name="dead_zone_label">Zona morta</string>
+    <string name="smoothing_label">Suavizacao</string>
+</resources>

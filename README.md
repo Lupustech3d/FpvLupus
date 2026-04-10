@@ -1,31 +1,54 @@
 # FPV Lupus
 
-Carrinho FPV controlado por Wi-Fi com stream de vídeo ao vivo e controle de câmera pan/tilt.
+Carrinho FPV controlado por Wi-Fi com stream de vídeo ao vivo, controle de câmera pan/tilt por giroscópio e visualização em modo VR.
 
-| Componente | Status | Funcao |
+| Componente | Status | Função |
 |---|---|---|
-| ESP32-CAM firmware | Pronto | Transmite vídeo MJPEG via HTTP |
+| ESP32-CAM firmware | Pronto | Stream de vídeo MJPEG via HTTP |
 | ESP8266 firmware | Pronto | Controla servos pan/tilt via HTTP |
-| App Android | Em desenvolvimento | Exibe vídeo em modo VR (controle de servo ainda nao integrado) |
+| App Android | Pronto | VR + head tracking + controle de servo |
 
 ---
 
-## Estado atual
-
-O app Android atualmente **exibe o stream de vídeo** da ESP32-CAM em modo VR (side-by-side).
-
-O controle dos servos via ESP8266 **ainda nao esta integrado ao app** — por enquanto pode ser testado direto pelo navegador.
+## Como funciona
 
 ```
-PRONTO:
-  ESP32-CAM  ──── MJPEG/HTTP ────> App Android (vídeo ok)
-  ESP8266    ──── HTTP GET   <───  Navegador (teste manual)
-
-PROXIMO PASSO:
-  ESP8266    <─── HTTP GET ──────  App Android (a implementar)
+[ESP32-CAM] ──── MJPEG/HTTP ────> App Android (exibe em VR)
+[ESP8266]   <─── HTTP GET ──────  App Android (envia ângulos pan/tilt)
+                                        ^
+                               Giroscópio do celular
 ```
 
-Todos os dispositivos precisam estar no mesmo Wi-Fi.
+Todos os dispositivos conectados ao mesmo Wi-Fi.
+O celular lê o giroscópio, calcula os ângulos e envia comandos ao ESP8266 em tempo real.
+
+---
+
+## App Android
+
+Pasta: `android-app/`
+
+**Funcionalidades:**
+- Stream de vídeo MJPEG em modo VR (side-by-side)
+- Head tracking por giroscópio — move os servos com a cabeça
+- Controle de servo via HTTP GET ao ESP8266
+- Tela de configurações (IP da câmera, IP do servo, sensibilidade, limites, suavização)
+- Botão de recentrar (recalibra o giroscópio)
+- Botão de centralizar servos
+- Status em tempo real de câmera, servo e tracking
+
+**Configurações disponíveis no app:**
+| Parâmetro | Descrição |
+|---|---|
+| URL da câmera | Endereço HTTP do stream MJPEG |
+| IP do servo | IP do ESP8266 |
+| Sensibilidade H/V | Ganho do giroscópio por eixo |
+| Inverter H/V | Inverte direção do movimento |
+| Pan min/max | Limite de ângulo horizontal |
+| Tilt min/max | Limite de ângulo vertical |
+| Dead zone | Zona morta do giroscópio (graus) |
+| Suavização | Filtro de movimento (0 = cru, 1 = suave) |
+| Intervalo de envio | Frequência dos comandos HTTP (ms) |
 
 ---
 
@@ -35,8 +58,6 @@ Todos os dispositivos precisam estar no mesmo Wi-Fi.
 
 Arquivo: `esp32-cam/camera_stream.ino`
 
-Acesse o stream pelo navegador ou pelo app:
-
 ```
 http://IP_DA_ESP32/stream
 ```
@@ -45,31 +66,29 @@ http://IP_DA_ESP32/stream
 
 Arquivo: `esp8266-servo/servo_control.ino`
 
-Envie comandos via HTTP GET:
-
 ```
 http://IP_DO_NODEMCU/control?pan=90&tilt=90
 ```
 
 | Parâmetro | Faixa | Descrição |
-|-----------|-------|-----------|
-| pan       | 40–140 | Esquerda/direita |
-| tilt      | 60–120 | Cima/baixo |
+|---|---|---|
+| pan | 40–140 | Esquerda/direita |
+| tilt | 60–120 | Cima/baixo |
 
-> Antes de gravar, edite `ssid` e `password` no topo de cada arquivo `.ino` com suas credenciais Wi-Fi.
+> Antes de gravar, edite `ssid` e `password` no topo de cada `.ino` com suas credenciais Wi-Fi.
 
 ---
 
 ## Lista de Material
 
 | Qtd | Componente |
-|-----|-----------|
+|---|---|
 | 1x | ESP32-CAM (AI Thinker) |
 | 1x | ESP8266 NodeMCU v3 |
 | 2x | Servo motor 9g (SG90) |
 | 1x | Fonte 5V 2A (mínimo) — recomendado 3A |
 | — | Jumpers macho-macho e macho-fêmea |
-| — | Protoboard (opcional, facilita montagem) |
+| — | Protoboard (opcional) |
 | — | Power bank 5V (para mobilidade) |
 | — | Suporte pan/tilt (impressão 3D) |
 
@@ -107,7 +126,7 @@ Fonte 5V (−) ──> ESP32-CAM (GND)
 **Servo PAN (esquerda/direita)**
 
 | Fio | Conectar |
-|-----|----------|
+|---|---|
 | Laranja (sinal) | D5 |
 | Vermelho | +5V da fonte |
 | Marrom | GND |
@@ -115,7 +134,7 @@ Fonte 5V (−) ──> ESP32-CAM (GND)
 **Servo TILT (cima/baixo)**
 
 | Fio | Conectar |
-|-----|----------|
+|---|---|
 | Laranja (sinal) | D6 |
 | Vermelho | +5V da fonte |
 | Marrom | GND |
@@ -123,7 +142,7 @@ Fonte 5V (−) ──> ESP32-CAM (GND)
 ### Pinos ESP32-CAM (AI Thinker)
 
 | Sinal | GPIO |
-|-------|------|
+|---|---|
 | PWDN | 32 |
 | XCLK | 0 |
 | SIOD | 26 |
@@ -138,7 +157,7 @@ Fonte 5V (−) ──> ESP32-CAM (GND)
 ## Erros Comuns
 
 | Sintoma | Causa |
-|---------|-------|
+|---|---|
 | Servo tremendo | Fonte fraca |
 | ESP reiniciando | Alimentação insuficiente |
 | Sem resposta | GND não conectado entre placas |
@@ -154,16 +173,16 @@ Fonte 5V (−) ──> ESP32-CAM (GND)
 
 ## Proximos Passos
 
-- [ ] Integrar controle de servos no app Android (HTTP para ESP8266)
-- [ ] Modo VR completo com controle por movimento da cabeca (giroscopio)
-- [ ] Suavizacao de movimento dos servos
-- [ ] Reducao de latencia do stream
+- [ ] Suavização adicional dos servos
+- [ ] Reducao de latência do stream
+- [ ] Controle de direção do carrinho pelo app
+- [ ] Modo autônomo
 
 ---
 
-## Documentacao
+## Documentação
 
-- [Ligacoes eletricas detalhadas](docs/wiring.md)
+- [Ligações elétricas detalhadas](docs/wiring.md)
 - [Arquitetura do sistema](docs/architecture.md)
 
 ---
