@@ -2,21 +2,30 @@
 
 Carrinho FPV controlado por Wi-Fi com stream de vídeo ao vivo e controle de câmera pan/tilt.
 
-- **ESP32-CAM** — transmite vídeo MJPEG via HTTP
-- **ESP8266 NodeMCU** — controla servos pan/tilt
-- **App Android** — exibe vídeo em modo VR e envia comandos (em desenvolvimento)
+| Componente | Status | Funcao |
+|---|---|---|
+| ESP32-CAM firmware | Pronto | Transmite vídeo MJPEG via HTTP |
+| ESP8266 firmware | Pronto | Controla servos pan/tilt via HTTP |
+| App Android | Em desenvolvimento | Exibe vídeo em modo VR (controle de servo ainda nao integrado) |
 
 ---
 
-## Como funciona
+## Estado atual
+
+O app Android atualmente **exibe o stream de vídeo** da ESP32-CAM em modo VR (side-by-side).
+
+O controle dos servos via ESP8266 **ainda nao esta integrado ao app** — por enquanto pode ser testado direto pelo navegador.
 
 ```
-[ESP32-CAM] ──── MJPEG/HTTP ────> [App Android]
-[ESP8266]   <─── HTTP GET ──────  [App Android]
+PRONTO:
+  ESP32-CAM  ──── MJPEG/HTTP ────> App Android (vídeo ok)
+  ESP8266    ──── HTTP GET   <───  Navegador (teste manual)
+
+PROXIMO PASSO:
+  ESP8266    <─── HTTP GET ──────  App Android (a implementar)
 ```
 
-O celular conecta ao mesmo Wi-Fi que as placas.
-A câmera transmite o vídeo e o app envia comandos de direção para os servos.
+Todos os dispositivos precisam estar no mesmo Wi-Fi.
 
 ---
 
@@ -145,8 +154,8 @@ Fonte 5V (−) ──> ESP32-CAM (GND)
 
 ## Proximos Passos
 
-- [ ] Integracao com modo VR no app
-- [ ] Controle por movimento da cabeca (giroscopio)
+- [ ] Integrar controle de servos no app Android (HTTP para ESP8266)
+- [ ] Modo VR completo com controle por movimento da cabeca (giroscopio)
 - [ ] Suavizacao de movimento dos servos
 - [ ] Reducao de latencia do stream
 
